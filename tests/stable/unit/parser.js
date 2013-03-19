@@ -905,7 +905,7 @@ exports.testLetStmtJetPack = function (test) {
 	];
 
 	TestRun(test)
-		.test(code, {moz: true, esnext: true, es5: true, unused: true, 
+		.test(code, {moz: true, es5: true, unused: true, 
 					 undef: true, predef: ["require", "xferable", "options"]});
 	test.done();
 };
@@ -921,7 +921,7 @@ exports.testLetStmtLetExpr = function (test) {
 	];
 
 	TestRun(test)
-		.test(code, {moz: true, esnext: true, es5: true, unused: true, 
+		.test(code, {moz: true, es5: true, unused: true, 
 					 undef: true, predef: ["print"]});
 	test.done();
 };
@@ -959,7 +959,7 @@ exports.testForEachError = function (test) {
 
 	TestRun(test)
 		.addError(1, "Invalid for each loop.")
-		.test(code, {moz: true, esnext: true, es5: true, unused: true,
+		.test(code, {moz: true, es5: true, unused: true,
 						undef: true, predef: ["print", "Iterator"]});
 
 	test.done();
@@ -1001,7 +1001,7 @@ exports.testArrayComprehension = function (test) {
 		"print('evens:', evens);"
 	];
 	TestRun(test)
-		.test(code, {moz: true, esnext: true, es5: true, unused: true, undef: true, 
+		.test(code, {moz: true, es5: true, unused: true, undef: true, 
 						predef: ["print", "Iterator"]});
 
 	test.done();
@@ -1021,7 +1021,7 @@ exports.testArrayComprehensionWithDestArray = function (test) {
 		"print('evens:', evens);"
 	];
 	TestRun(test)
-		.test(code, {moz: true, esnext: true, es5: true, unused: true, undef: true, 
+		.test(code, {moz: true, es5: true, unused: true, undef: true, 
 						predef: ["print", "Iterator"]});
 
 	test.done();
@@ -1035,7 +1035,7 @@ exports.testArrayComprehensionWithDestArrayGlobScope = function (test) {
 	];
 	TestRun(test)
 		.addError(1, "Expected an assignment or function call and instead saw an expression.")
-		.test(code, {moz: true, esnext: true, es5: true, undef: true, 
+		.test(code, {moz: true, es5: true, undef: true, 
 						predef: ["print", "Iterator"]});
 
 	test.done();
@@ -1048,7 +1048,7 @@ exports.testArrayComprehensionImbricationWithDestArray = function (test) {
 	];
 	TestRun(test)
 		.addError(1, "Expected an assignment or function call and instead saw an expression.")
-		.test(code, {moz: true, esnext: true, es5: true, undef: true, 
+		.test(code, {moz: true, es5: true, undef: true, 
 						predef: ["print", "Iterator"]});
 
 	test.done();
@@ -1064,7 +1064,7 @@ exports.testTryCatchFilter = function (test) {
 		"}"
 	];
 	TestRun(test)
-		.test(code, {moz: true, esnext: true, es5: true, undef: true, 
+		.test(code, {moz: true, es5: true, undef: true, 
 						predef: ["print"]});
 
 	test.done();
@@ -1075,7 +1075,7 @@ exports.testArrayComprehensionDetection = function (test) {
 		"var foo = []; for each (let i in [1,2,3]) { print(i); }"
 	];
 	TestRun(test)
-		.test(code, {moz: true, esnext: true, es5: true, undef: true, 
+		.test(code, {moz: true, es5: true, undef: true, 
 						predef: ["print"]});
 
 	test.done();
@@ -1088,7 +1088,7 @@ exports.testFunctionExpressionClosure = function (test) {
 		"}"
 	];
 	TestRun(test)
-		.test(code, {moz: true, esnext: true, es5: true, undef: true});
+		.test(code, {moz: true, es5: true, undef: true});
 
 	test.done();
 };
@@ -1122,7 +1122,7 @@ exports.testTryMultiCatch = function (test) {
 		"}"
 	];
 	TestRun(test)
-		.test(code, {moz: true, esnext: true, es5: true, undef: true, predef: ["print"]});
+		.test(code, {moz: true, es5: true, undef: true, predef: ["print"]});
 
 	test.done();
 };

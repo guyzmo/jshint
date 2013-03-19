@@ -487,12 +487,12 @@ var JSHINT = (function () {
 					warning("W003", state.tokens.next, t);
 			} else {
 				if (!state.option.shadow && type !== "exception" || 
-                        (state.option.esnext && funct["(blockscope)"].getlabel(t))) {
+                        ((state.option.moz || state.option.esnext) && funct["(blockscope)"].getlabel(t))) {
 					warning("W004", state.tokens.next, t);
 				}
 			}
 		}
-		if (state.option.esnext) {
+		if ((state.option.moz || state.option.esnext)) {
 			// a double definition of a let variable in same block throws a TypeError
 			if (funct["(blockscope)"] && funct["(blockscope)"].current.has(t)) {
 				error("E044", state.tokens.next, t);
@@ -500,7 +500,7 @@ var JSHINT = (function () {
 		}
 
 		// if the identifier is from a let, adds it only to the current blockscope
-		if (state.option.esnext && islet) {
+		if ((state.option.moz || state.option.esnext) && islet) {
 			funct["(blockscope)"].current.add(t, type, state.tokens.curr);
 		} else {
 
@@ -1211,7 +1211,7 @@ var JSHINT = (function () {
 					warning("W021", left, left.value);
 				}
 
-				if (state.option.esnext && funct[left.value] === "const") {
+				if ((state.option.moz || state.option.esnext) && funct[left.value] === "const") {
 					error("E013", left, left.value);
 				}
 
@@ -1222,7 +1222,7 @@ var JSHINT = (function () {
 					that.right = expression(19);
 					return that;
 				} else if (left.id === "[") {
-					if (state.option.esnext && state.tokens.curr.left.first) {
+					if ((state.option.moz || state.option.esnext) && state.tokens.curr.left.first) {
 						state.tokens.curr.left.first.forEach(function (t) {
 							if (funct[t.value] === "const") {
 								error("E013", t, t.value);
@@ -1405,7 +1405,7 @@ var JSHINT = (function () {
 		}
 
 		// detect a destructuring assignment
-		if (state.option.esnext && _.has(["[", "{"], t.value)) {
+		if ((state.option.moz || state.option.esnext) && _.has(["[", "{"], t.value)) {
 			if (lookupBlockType().isDestAssign) {
 				values = destructuringExpression();
 				values.forEach(function (tok) {
@@ -1599,7 +1599,7 @@ var JSHINT = (function () {
 
 		if (state.tokens.next.id === "{") {
 			advance("{");
-			if (state.option.esnext) {
+			if (state.option.moz || state.option.esnext) {
 				// create a new block scope
 				funct["(blockscope)"].stack();
 			}
@@ -1642,7 +1642,7 @@ var JSHINT = (function () {
 				indentation();
 			}
 			advance("}", t);
-			if (state.option.esnext) {
+			if (state.option.moz || state.option.esnext) {
 				funct["(blockscope)"].unstack();
 			}
 			indent = old_indent;
@@ -1744,7 +1744,7 @@ var JSHINT = (function () {
 				funct = f;
 			}
 			var block;
-			if (state.option.esnext && _.has(funct, "(blockscope)")) {
+			if ((state.option.moz || state.option.esnext) && _.has(funct, "(blockscope)")) {
 				block = funct["(blockscope)"].getlabel(v);
 			}
 			
@@ -1789,7 +1789,7 @@ var JSHINT = (function () {
 						// the presence of the given variable in the comp array
 						// before declaring it undefined.
 
-						if (!(state.option.esnext && funct["(comparray)"].check(v))) {
+						if (!((state.option.moz || state.option.esnext) && funct["(comparray)"].check(v))) {
 							isundef(funct, "W117", state.tokens.curr, v);
 						}
 					}
@@ -2383,7 +2383,7 @@ var JSHINT = (function () {
 		}
 
 		for (;;) {
-			if (state.option.esnext && _.contains(["{", "["], state.tokens.next.id)) {
+			if ((state.option.moz || state.option.esnext) && _.contains(["{", "["], state.tokens.next.id)) {
 				tokens = destructuringExpression();
 				for (var t in tokens) {
 					t = tokens[t];
@@ -2836,7 +2836,7 @@ var JSHINT = (function () {
 				}
 				for (var t in tokens) {
 					t = tokens[t];
-					if (state.option.esnext && funct[t.id] === "const") {
+					if ((state.option.moz || state.option.esnext) && funct[t.id] === "const") {
 						warning("E011", null, t.id);
 					}
 					if (funct["(global)"] && predefined[t.id] === false) {
@@ -2911,7 +2911,7 @@ var JSHINT = (function () {
 				}
 				for (var t in tokens) {
 					t = tokens[t];
-					if (state.option.esnext && funct[t.id] === "const") {
+					if ((state.option.moz || state.option.esnext) && funct[t.id] === "const") {
 						warning("E011", null, t.id);
 					}
 					if (funct["(global)"] && predefined[t.id] === false) {
@@ -2984,7 +2984,7 @@ var JSHINT = (function () {
 			nonadjacent(state.tokens.curr, state.tokens.next);
 			id = identifier();
 
-			if (state.option.esnext && funct[id] === "const") {
+			if ((state.option.moz || state.option.esnext) && funct[id] === "const") {
 				warning("E011", null, id);
 			}
 
@@ -3029,7 +3029,7 @@ var JSHINT = (function () {
 
 		}
 		var i = identifier();
-		if (state.option.esnext && funct[i] === "const") {
+		if ((state.option.moz || state.option.esnext) && funct[i] === "const") {
 			warning("E011", null, i);
 		}
 		adjacent(state.tokens.curr, state.tokens.next);
@@ -3384,7 +3384,7 @@ var JSHINT = (function () {
 			if (state.tokens.next.id === "var") {
 				advance("var");
 				state.syntax["var"].fud.call(state.syntax["var"].fud, true);
-			} else if (state.option.esnext && state.tokens.next.id === "let") {
+			} else if ((state.option.moz || state.option.esnext) && state.tokens.next.id === "let") {
 				advance("let");
 				// create a new block scope
 				letscope = true;
@@ -3421,7 +3421,7 @@ var JSHINT = (function () {
 				if (state.tokens.next.id === "var") {
 					advance("var");
 					state.syntax["var"].fud.call(state.syntax["var"].fud);
-				} else if (state.option.esnext && state.tokens.next.id === "let") {
+				} else if ((state.option.moz || state.option.esnext) && state.tokens.next.id === "let") {
 					advance("let");
 					// create a new block scope
 					letscope = true;
@@ -3545,7 +3545,7 @@ var JSHINT = (function () {
 	}).exps = true;
 
 	stmt("yield", function () {
-		if (!state.option.esnext) {
+		if (!(state.option.moz || state.option.esnext)) {
 			warning("W104", state.tokens.curr, "yield");
 		}
 		if (this.line === state.tokens.next.line) {
@@ -3656,7 +3656,7 @@ var JSHINT = (function () {
 
 		var block = null;
 
-		if (state.option.esnext) {
+		if (state.option.moz || state.option.esnext) {
 			block = lookupBlockType();
 		}
 		if (block && block.notJson) {
